@@ -22,10 +22,18 @@ const livrosPadrao = [
 function cadastrarLivroPrompt() {
   let titulo, autor, ano, genero;
 
-  while (!titulo) titulo = prompt("Título do livro:");
-  while (!autor) autor = prompt("Autor:");
-  while (!ano) ano = prompt("Ano:");
-  while (!genero) genero = prompt("Gênero:");
+  while (!titulo) { 
+    titulo = prompt("Título do livro:");
+  }
+  while (!autor) {
+    autor = prompt("Autor:");
+  }
+  while (!ano) {
+    ano = prompt("Ano:");
+  }
+  while (!genero) {
+    genero = prompt("Gênero:");
+  }
 
   cadastrarLivro(titulo, autor, ano, genero);
   console.log("Livro cadastrado!");
@@ -54,7 +62,9 @@ function listarLivros() {
 function editarLivro(id, titulo, autor, ano, genero) {
   const livro = livros.find(l => l.id === id);
 
-  if (!livro) return console.log("Livro não encontrado.");
+  if (!livro) {
+    return console.log("Livro não encontrado.");
+  }
 
   if (livro.padrao) {
     console.log("Este livro é padrão e NÃO pode ser editado.");

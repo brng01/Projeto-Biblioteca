@@ -33,12 +33,12 @@ function registrarEmprestimo(idUsuario, idLivro) {
 
 function registrarEmprestimoPrompt() {
   listarUsuarios();
-  const uid = Number(prompt("ID do usuário:"));
+  const idUsuario = Number(prompt("ID do usuário:"));
 
   listarLivros();
-  const lid = Number(prompt("ID do livro:"));
+  const idLivro = Number(prompt("ID do livro:"));
 
-  registrarEmprestimo(uid, lid);
+  registrarEmprestimo(idUsuario, idLivro);
 }
 
 // Listagem
@@ -59,15 +59,15 @@ function listarEmprestimos() {
 // Devolução
 
 function devolverLivro(idEmprestimo) {
-  const emp = emprestimos.find(e => e.id === idEmprestimo);
-  if (!emp) return console.log("Empréstimo não encontrado.");
+  const emprestimo = emprestimos.find(e => e.id === idEmprestimo);
+  if (!emprestimo) return console.log("Empréstimo não encontrado.");
 
-  const livro = livros.find(l => l.id === emp.idLivro);
+  const livro = livros.find(l => l.id === emprestimo.idLivro);
   if (!livro) return console.log("Livro não encontrado.");
 
   livro.emprestado = false;
 
-  emp.status = "devolvido";
+  emprestimo.status = "devolvido";
 
   salvarDados();
 
