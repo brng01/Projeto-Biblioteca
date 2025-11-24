@@ -7,13 +7,26 @@ function cadastrarUsuario(nome, email) {
   console.log("Usuário cadastrado com sucesso!");
 }
 
+// Cadastro
+
 function cadastrarUsuarioPrompt() {
   let nome, email;
 
-  while (!nome) nome = prompt("Nome completo do usuário:");
-  while (!email) email = prompt("E-mail do usuário:");
+  while (!nome) {
+    nome = prompt("Nome completo do usuário:");
+  }
+
+  const emailValido = (e) => {
+    if (!e.includes("@")) return false;
+    return e.endsWith(".com") || e.endsWith(".com.br");
+  };
+
+  while (!email || !emailValido(email)) {
+    email = prompt("E-mail do usuário (deve conter @ e terminar com .com ou .com.br):");
+  }
 
   cadastrarUsuario(nome, email);
+  console.log("Usuário cadastrado com sucesso!");
 }
 
 
