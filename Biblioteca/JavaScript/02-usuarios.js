@@ -12,17 +12,33 @@ function cadastrarUsuario(nome, email) {
 function cadastrarUsuarioPrompt() {
   let nome, email;
 
-  while (!nome) {
+  while (true) {
     nome = prompt("Nome completo do usuário:");
+
+    if (nome === null) {
+      console.log("Cadastro cancelado pelo usuário.");
+      return;
+    }
+
+    if (nome.trim() !== "") break;
   }
 
-  const emailValido = (e) => {
-    if (!e.includes("@")) return false;
-    return e.endsWith(".com") || e.endsWith(".com.br");
-  };
+const emailValido = (email) => {
+  if (!email) return false;
 
-  while (!email || !emailValido(email)) {
-    email = prompt("E-mail do usuário (deve conter @ e terminar com .com ou .com.br):");
+  const regex = /^[^\s@]+@[^\s@]+\.(com|com\.br)$/i;
+  return regex.test(email);
+};
+
+  while (true) {
+    email = prompt("E-mail do usuário");
+
+    if (email === null) {
+      console.log("Cadastro cancelado pelo usuário.");
+      return;
+    }
+
+    if (emailValido(email)) break;
   }
 
   cadastrarUsuario(nome, email);
