@@ -13,7 +13,7 @@ function cadastrarUsuarioPrompt() {
   let nome, email;
 
   while (true) {
-    nome = prompt("Nome completo do usuário:");
+    nome = prompt("Nome do usuário:");
 
     if (nome === null) {
       console.log("Cadastro cancelado pelo usuário.");
@@ -21,24 +21,52 @@ function cadastrarUsuarioPrompt() {
     }
 
     if (nome.trim() !== "") break;
+
+    alert("O nome não pode estar vazio.");
   }
 
-const emailValido = (email) => {
-  if (!email) return false;
+  function validarEmail(email) {
+    if (!email) {
+      return "O campo de e-mail não pode estar vazio.";
+    }
 
-  const regex = /^[^\s@]+@[^\s@]+\.(com|com\.br)$/i;
-  return regex.test(email);
-};
+    if (email.includes(" ")) {
+      return "O e-mail não pode conter espaços.";
+    }
+
+    if (!email.includes("@")) {
+      return "O e-mail precisa conter '@'.";
+    }
+
+    if (!email.match(/^[^\s@]+@[^\s@]+$/)) {
+      return "O e-mail precisa ter texto antes e depois do '@'.";
+    }
+
+    if (!(email.endsWith(".com") || email.endsWith(".com.br"))) {
+      return "O e-mail deve terminar em .com ou .com.br.";
+    }
+
+    const regex = /^[^\s@]+@[^\s@]+\.(com|com\.br)$/i;
+    if (!regex.test(email)) {
+      return "Formato de e-mail inválido.";
+    }
+
+    return true;
+  }
 
   while (true) {
-    email = prompt("E-mail do usuário");
+    email = prompt("E-mail do usuário:");
 
     if (email === null) {
       console.log("Cadastro cancelado pelo usuário.");
       return;
     }
 
-    if (emailValido(email)) break;
+    const resultado = validarEmail(email);
+
+    if (resultado === true) break;
+
+    alert("E-mail inválido: " + resultado);
   }
 
   cadastrarUsuario(nome, email);
