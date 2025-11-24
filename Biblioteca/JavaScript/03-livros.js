@@ -7,37 +7,41 @@ function cadastrarLivro(titulo, autor, ano, genero) {
 }
 
 const livrosPadrao = [
-    { id: 1, titulo: "Harry Potter e a Pedra Filosofal", autor: "J.K. Rowling", ano: 1997, genero: "Fantasia", emprestado: false, padrao: true },
-    { id: 2, titulo: "A Droga do Amor", autor: "Pedro Bandeira", ano: 1994, genero: "Romance Juvenil", emprestado: false, padrao: true },
-    { id: 3, titulo: "Dom Casmurro", autor: "Machado de Assis", ano: 1899, genero: "Romance", emprestado: false, padrao: true },
-    { id: 4, titulo: "O Pequeno Príncipe", autor: "Antoine de Saint-Exupéry", ano: 1943, genero: "Fábula", emprestado: false, padrao: true },
-    { id: 5, titulo: "O Senhor dos Anéis", autor: "J.R.R. Tolkien", ano: 1954, genero: "Fantasia", emprestado: false, padrao: true }
-  ]
+  { id: 1, titulo: "Harry Potter e a Pedra Filosofal", autor: "J.K. Rowling", ano: 1997, genero: "Fantasia", emprestado: false, padrao: true },
+  { id: 2, titulo: "A Droga do Amor", autor: "Pedro Bandeira", ano: 1994, genero: "Romance Juvenil", emprestado: false, padrao: true },
+  { id: 3, titulo: "Dom Casmurro", autor: "Machado de Assis", ano: 1899, genero: "Romance", emprestado: false, padrao: true },
+  { id: 4, titulo: "O Pequeno Príncipe", autor: "Antoine de Saint-Exupéry", ano: 1943, genero: "Fábula", emprestado: false, padrao: true },
+  { id: 5, titulo: "O Senhor dos Anéis", autor: "J.R.R. Tolkien", ano: 1954, genero: "Fantasia", emprestado: false, padrao: true }
+];
 
-  if (livros.length === 0) {
-    livros = [...livrosPadrao];
-    salvarDados();
-  }
+if (livros.length === 0) {
+  livros = [...livrosPadrao];
+  salvarDados();
+}
+
+
+// Cadastro
 
 function cadastrarLivroPrompt() {
   let titulo, autor, ano, genero;
 
-  while (!titulo) { 
+  while (!titulo) {
     titulo = prompt("Título do livro:");
   }
   while (!autor) {
     autor = prompt("Autor:");
   }
   while (!ano) {
-    ano = prompt("Ano:");
+    ano = prompt("Ano de publicação:");
   }
   while (!genero) {
-    genero = prompt("Gênero:");
+    genero = prompt("Gênero do livro:");
   }
 
   cadastrarLivro(titulo, autor, ano, genero);
   console.log("Livro cadastrado!");
 }
+
 
 // Listagem
 
@@ -57,14 +61,37 @@ function listarLivros() {
   console.table(lista);
 }
 
+
 // Edição
 
-function editarLivro(id, titulo, autor, ano, genero) {
+function editarLivroPrompt() {
+
+  listarLivros();
+
+  const id = Number(prompt("Informe o ID do livro que deseja EDITAR:"));
+
   const livro = livros.find(l => l.id === id);
 
   if (!livro) {
     return console.log("Livro não encontrado.");
   }
+  if (livro.padrao) {
+    console.log("Este livro é padrão e NÃO pode ser editado.");
+    return;
+  }
+
+  const novoTitulo = prompt(`Novo título (atual: ${livro.titulo})`) || livro.titulo;
+  const novoAutor = prompt(`Novo autor (atual: ${livro.autor})`) || livro.autor;
+  const novoAno = prompt(`Novo ano (atual: ${livro.ano})`) || livro.ano;
+  const novoGenero = prompt(`Novo gênero (atual: ${livro.genero})`) || livro.genero;
+
+  editarLivro(id, novoTitulo, novoAutor, novoAno, novoGenero);
+}
+
+function editarLivro(id, titulo, autor, ano, genero) {
+  const livro = livros.find(l => l.id === id);
+
+  if (!livro) return console.log("Livro não encontrado.");
 
   if (livro.padrao) {
     console.log("Este livro é padrão e NÃO pode ser editado.");
@@ -80,7 +107,17 @@ function editarLivro(id, titulo, autor, ano, genero) {
   console.log("Livro editado com sucesso!");
 }
 
+
 // Exclusão
+
+function excluirLivroPrompt() {
+
+  listarLivros();
+
+  const id = Number(prompt("Informe o ID do livro que deseja EXCLUIR:"));
+
+  excluirLivro(id);
+}
 
 function excluirLivro(id) {
   const livro = livros.find(l => l.id === id);
